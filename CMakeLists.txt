@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.28.2)
 
+# project solution name (topmost name in visual studio)
 project(LightYear
 	VERSION 1.0.0
 	LANGUAGES C CXX
@@ -10,7 +11,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS       OFF)
 
 # create a variable
+# set(var_name value)
 set(LIGHT_YEARS_GAME_TARGET_NAME LightYearsGame)
+
+# fetch the SFML library
+include(FetchContent)
+set(SFML_LIB_NAME SFML)
+
+FetchContent_Declare(
+	${SFML_LIB_NAME}
+	GIT_REPOSITORY https://github.com/SFML/SFML
+	GIT_TAG        2.5.1
+	GIT_SHALLOW FALSE
+)
+
+FetchContent_MakeAvailable(${SFML_LIB_NAME})
 
 # add the subdirectory (CMakeLists in LightYears)
 add_subdirectory(LightYears)
