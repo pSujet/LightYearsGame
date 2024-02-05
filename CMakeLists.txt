@@ -10,10 +10,6 @@ set(CMAKE_CXX_STANDARD          14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS       OFF)
 
-# create a variable
-# set(var_name value)
-set(LIGHT_YEARS_GAME_TARGET_NAME LightYearsGame)
-
 # fetch the SFML library
 include(FetchContent)
 set(SFML_LIB_NAME SFML)
@@ -27,5 +23,10 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(${SFML_LIB_NAME})
 
-# add the subdirectory (CMakeLists in LightYears)
-add_subdirectory(LightYears)
+# create a variable - set(var_name value)
+set(LIGHT_YEARS_ENGINE_TARGET_NAME LightYearsEngine)
+set(LIGHT_YEARS_GAME_TARGET_NAME LightYearsGame)
+
+# add the subdirectory (CMakeLists in LightYearsEngine and LightYearsGame)
+add_subdirectory(LightYearsEngine)
+add_subdirectory(LightYearsGame)
