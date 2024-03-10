@@ -1,5 +1,6 @@
 #include "framework/Application.h"
 #include <iostream>
+#include <framework/Core.h>
 
 namespace ly
 {
@@ -25,8 +26,8 @@ namespace ly
 			}
 
 
-			float FrameDeltaTime = mTickClock.restart().asSeconds();
-			accumulatedTime += FrameDeltaTime;
+			float frameDeltaTime = mTickClock.restart().asSeconds();
+			accumulatedTime += frameDeltaTime;
 			//update the frame at the targetDeltaTime
 			while (accumulatedTime >= targetDeltaTime)
 			{
@@ -35,6 +36,7 @@ namespace ly
 				TickInternal(targetDeltaTime);
 				RenderInternal();
 			}
+			printf("FrameDeltaTime: %f\n", 1.f/frameDeltaTime);
 		}
 	}
 
