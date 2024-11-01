@@ -1,19 +1,19 @@
-# add source and header files
+# Add source and header files
 add_executable(${LIGHT_YEARS_GAME_TARGET_NAME} 
 	${CMAKE_CURRENT_SOURCE_DIR}/include/gameFramework/GameApplication.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/gameFramework/GameApplication.cpp
 )
 
-# include header files(include foder)
+# Include header files(include folder)
 target_include_directories(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-# link the SFML library
+# Link the ENGINE library
 target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NAME} PUBLIC ${LIGHT_YEARS_ENGINE_TARGET_NAME})
 
 
-# create a function copy the SFML library to the target directory after build
+# Create a function copy the SFML library to the target directory after build
 function(CopyLibDirToTarget LIB_NAME TARGET_NAME)
 	add_custom_command(TARGET ${TARGET_NAME}
 		POST_BUILD

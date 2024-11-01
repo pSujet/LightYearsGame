@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28.2)
 
 # project solution name (topmost name in visual studio)
-project(LightYear
+project(LightYears
 	VERSION 1.0.0
 	LANGUAGES C CXX
 )
@@ -18,7 +18,7 @@ FetchContent_Declare(
 	${SFML_LIB_NAME}
 	GIT_REPOSITORY https://github.com/SFML/SFML
 	GIT_TAG        2.5.1
-	GIT_SHALLOW FALSE
+	GIT_SHALLOW FALSE # Not just shallow copy
 )
 
 FetchContent_MakeAvailable(${SFML_LIB_NAME})

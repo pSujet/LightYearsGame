@@ -1,32 +1,34 @@
 #include "framework/Application.h"
 #include <iostream>
 #include <framework/Core.h>
+#include <framework/World.h> // Forward declaration in header but need to be included in cpp file
 
 namespace ly
 {
 	Application::Application()
-		: mWindow{ sf::VideoMode(512, 720), "Light Years" },
-		mTargetFramerate{ 60.0f },
-		mTickClock{}
+		: _Window{ sf::VideoMode(512, 720), "Light Years" },
+		_TargetFramerate{ 60.0f },
+		_TickClock{},
+		currentWorld{nullptr}
 	{
 		
 	}
 	void Application::Run() 
 	{	
-		mTickClock.restart();
+		_TickClock.restart();
 		float accumulatedTime = 0.0f;
-		float targetDeltaTime = 1.0f / mTargetFramerate;
-		while (mWindow.isOpen())
+		float targetDeltaTime = 1.0f / _TargetFramerate;
+		while (_Window.isOpen())
 		{
 			sf::Event windowEvent;
-			while (mWindow.pollEvent(windowEvent))
+			while (_Window.pollEvent(windowEvent))
 			{
 				if (windowEvent.type == sf::Event::EventType::Closed)
-					mWindow.close();
+					_Window.close();
 			}
 
 
-			float frameDeltaTime = mTickClock.restart().asSeconds();
+			float frameDeltaTime = _TickClock.restart().asSeconds();
 			accumulatedTime += frameDeltaTime;
 			//update the frame at the targetDeltaTime
 			while (accumulatedTime >= targetDeltaTime)
@@ -36,23 +38,26 @@ namespace ly
 				TickInternal(targetDeltaTime);
 				RenderInternal();
 			}
-			printf("FrameDeltaTime: %f\n", 1.f/frameDeltaTime);
 		}
 	}
 
 	void Application::TickInternal(float deltaTime)
 	{
 		Tick(deltaTime);
+
+		if (currentWorld) {			
+			currentWorld->TickInternal(deltaTime);
+		}			
 	}
 
-	// better practice to make in this template pattern with virtual functions
+	// Better practice to make in this template pattern with virtual functions
 	void Application::RenderInternal()
 	{
-		mWindow.clear();
+		_Window.clear();
 
 		Render();
 
-		mWindow.display();
+		_Window.display();
 	}
 
 	void Application::Render()
@@ -60,8 +65,8 @@ namespace ly
 		sf::RectangleShape rect(sf::Vector2f(100.0f, 100.0f));
 		rect.setFillColor(sf::Color::Green);
 		rect.setOrigin(rect.getSize().x / 2.f, rect.getSize().y / 2.f);
-		rect.setPosition(mWindow.getSize().x / 2.f, mWindow.getSize().y / 2.f);
-		mWindow.draw(rect);
+		rect.setPosition(_Window.getSize().x / 2.f, _Window.getSize().y / 2.f);
+		_Window.draw(rect);
 	}
 
 	void Application::Tick(float deltaTime)

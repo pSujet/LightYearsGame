@@ -1,4 +1,4 @@
-# add library
+# Add library
 add_library(${LIGHT_YEARS_ENGINE_TARGET_NAME} STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Application.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Application.cpp
@@ -6,22 +6,25 @@ add_library(${LIGHT_YEARS_ENGINE_TARGET_NAME} STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Core.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Core.cpp
 
+	${CMAKE_CURRENT_SOURCE_DIR}/include/framework/World.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/framework/World.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/include/EntryPoint.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/EntryPoint.cpp
 )
 
-# include header files(include foder)
+# Include header files(include foder)
 target_include_directories(${LIGHT_YEARS_ENGINE_TARGET_NAME} PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-# link the SFML library
+# Link the SFML library
 target_link_libraries(${LIGHT_YEARS_ENGINE_TARGET_NAME} PUBLIC sfml-graphics)
 target_link_libraries(${LIGHT_YEARS_ENGINE_TARGET_NAME} PUBLIC sfml-window)
 target_link_libraries(${LIGHT_YEARS_ENGINE_TARGET_NAME} PUBLIC sfml-system)
 target_link_libraries(${LIGHT_YEARS_ENGINE_TARGET_NAME} PUBLIC sfml-audio)
 
-# create a function copy the SFML library to the target directory after build
+# Create a function copy the SFML library to the target directory after build
 function(CopyLibToTarget LIB_NAME TARGET_NAME)
 	add_custom_command(TARGET ${TARGET_NAME}
 		POST_BUILD
@@ -32,6 +35,7 @@ function(CopyLibToTarget LIB_NAME TARGET_NAME)
 	)
 endfunction()
 
+# Copy .dll to the build folder
 CopyLibToTarget(sfml-graphics ${LIGHT_YEARS_ENGINE_TARGET_NAME})
 CopyLibToTarget(sfml-window ${LIGHT_YEARS_ENGINE_TARGET_NAME})
 CopyLibToTarget(sfml-system ${LIGHT_YEARS_ENGINE_TARGET_NAME})
