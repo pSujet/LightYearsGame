@@ -1,7 +1,7 @@
 #include "framework/Application.h"
 #include <iostream>
-#include <framework/Core.h>
-#include <framework/World.h> // Forward declaration in header but need to be included in cpp file
+#include "framework/Core.h"
+#include "framework/World.h" // Forward declaration in header but need to be included in cpp file
 
 namespace ly
 {
