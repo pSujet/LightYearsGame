@@ -5,8 +5,8 @@
 
 namespace ly
 {
-	Application::Application()
-		: _Window{ sf::VideoMode(512, 720), "Light Years" },
+	Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style)
+		: _window{ sf::VideoMode(windowWidth, windowHeight), title, style },
 		_TargetFramerate{ 60.0f },
 		_TickClock{},
 		currentWorld{nullptr}
@@ -18,13 +18,13 @@ namespace ly
 		_TickClock.restart();
 		float accumulatedTime = 0.0f;
 		float targetDeltaTime = 1.0f / _TargetFramerate;
-		while (_Window.isOpen())
+		while (_window.isOpen())
 		{
 			sf::Event windowEvent;
-			while (_Window.pollEvent(windowEvent))
+			while (_window.pollEvent(windowEvent))
 			{
 				if (windowEvent.type == sf::Event::EventType::Closed)
-					_Window.close();
+					_window.close();
 			}
 
 
@@ -53,20 +53,19 @@ namespace ly
 	// Better practice to make in this template pattern with virtual functions
 	void Application::RenderInternal()
 	{
-		_Window.clear();
+		_window.clear();
 
 		Render();
 
-		_Window.display();
+		_window.display();
 	}
 
 	void Application::Render()
 	{
-		sf::RectangleShape rect(sf::Vector2f(100.0f, 100.0f));
-		rect.setFillColor(sf::Color::Green);
-		rect.setOrigin(rect.getSize().x / 2.f, rect.getSize().y / 2.f);
-		rect.setPosition(_Window.getSize().x / 2.f, _Window.getSize().y / 2.f);
-		_Window.draw(rect);
+		if (currentWorld)
+		{
+			currentWorld->Render(_window);
+		}
 	}
 
 	void Application::Tick(float deltaTime)

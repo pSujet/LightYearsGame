@@ -29,10 +29,24 @@ namespace ly
 		}
 		_pendingActor.clear();
 
-		for (shared<Actor> actor : _actors)
-		{
-			actor->Tick(deltaTime);
+		for(auto iter = _actors.begin(); iter != _actors.end();)
+		{	
+			// (*iter)->IsPendingDestroy()
+			// -> We get shared<Actor>
+			// get() We get raw *Actor
+			// -> + get() = *
+			if (iter->get()->IsPendingDestroy())
+			{
+				iter = _actors.erase(iter);
+			}
+			else
+			{
+				iter->get()->TickInternal(deltaTime);
+				++iter;
+			}
 		}
+
+
 		Tick(deltaTime);
 	}
 	World::~World()
@@ -45,5 +59,12 @@ namespace ly
 	void World::Tick(float deltaTime)
 	{
 		LOG("tick %f", 1.f/deltaTime);
+	}
+	void World::Render(sf::RenderWindow& window)
+	{
+		for (auto actor : _actors)
+		{
+			actor->Render(window);
+		}
 	}
 }

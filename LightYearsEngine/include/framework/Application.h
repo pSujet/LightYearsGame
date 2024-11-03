@@ -8,7 +8,7 @@ namespace ly
 	class Application
 	{
 	public:
-		Application();
+		Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style);
 		void Run();
 
 		template<typename WorldType>
@@ -19,7 +19,7 @@ namespace ly
 		void RenderInternal();
 		virtual void Render();
 		virtual void Tick(float deltaTime);
-		sf::RenderWindow _Window;
+		sf::RenderWindow _window;
 		float _TargetFramerate;
 		sf::Clock _TickClock;
 		shared<World> currentWorld;
