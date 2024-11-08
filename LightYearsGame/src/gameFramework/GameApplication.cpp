@@ -2,6 +2,7 @@
 #include "framework/World.h"
 #include "framework/Actor.h"
 #include "framework/Core.h"
+#include "config.h"
 
 ly::Application* GetApplication()
 {
@@ -15,8 +16,8 @@ namespace ly
 	{
 		weak<World> newWorld = LoadWorld<World>();
 		newWorld.lock()->SpawnActor<Actor>();
-		_actorToDestroy = newWorld.lock()->SpawnActor<Actor>();
-		_actorToDestroy.lock()->SetTexture("../../../LightYearsGame/assets/SpaceShooterRedux/PNG/playerShip1_green.png");
+		mActorToDestroy = newWorld.lock()->SpawnActor<Actor>();
+		mActorToDestroy.lock()->SetTexture(GetResourceDir() + "SpaceShooterRedux/PNG/playerShip1_green.png");
 		counter = 0;
 	}
 	void GameApplication::Tick(float deltaTime)
@@ -25,9 +26,9 @@ namespace ly
 		LOG("Current time: %f", counter);
 		if (counter > 2.f)
 		{
-			if (!_actorToDestroy.expired())
+			if (!mActorToDestroy.expired())
 			{
-				_actorToDestroy.lock()->Destroy();
+				mActorToDestroy.lock()->Destroy();
 			}
 		}
 	}

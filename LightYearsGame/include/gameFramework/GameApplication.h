@@ -12,6 +12,6 @@ namespace ly
 		virtual void Tick(float deltaTIme) override;
 	private:
 		float counter;
-		weak<Actor> _actorToDestroy;
+		weak<Actor> mActorToDestroy;
 	};
 }

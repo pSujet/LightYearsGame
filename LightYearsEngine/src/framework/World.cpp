@@ -5,31 +5,31 @@
 namespace ly
 {
 	World::World(Application* owningApp)
-		: _owningApp{ owningApp },
-		_beganPlay{ false },
-		_actors{},
-		_pendingActor{}
+		: mOningApp{ owningApp },
+		mBeganPlay{ false },
+		mActors{},
+		mPendingActor{}
 	{
 
 	}
 	void World::BeginPlayInternal()
 	{
-		if (!_beganPlay) {
-			_beganPlay = true;
+		if (!mBeganPlay) {
+			mBeganPlay = true;
 			BeginPlay();
 		}
 			
 	}
 	void World::TickInternal(float deltaTime)
 	{	
-		for (shared<Actor> actor : _pendingActor)
+		for (shared<Actor> actor : mPendingActor)
 		{
-			_actors.push_back(actor);
+			mActors.push_back(actor);
 			actor->BeginPlayInternal();
 		}
-		_pendingActor.clear();
+		mPendingActor.clear();
 
-		for(auto iter = _actors.begin(); iter != _actors.end();)
+		for(auto iter = mActors.begin(); iter != mActors.end();)
 		{	
 			// (*iter)->IsPendingDestroy()
 			// -> We get shared<Actor>
@@ -37,7 +37,7 @@ namespace ly
 			// -> + get() = *
 			if (iter->get()->IsPendingDestroy())
 			{
-				iter = _actors.erase(iter);
+				iter = mActors.erase(iter);
 			}
 			else
 			{
@@ -62,7 +62,7 @@ namespace ly
 	}
 	void World::Render(sf::RenderWindow& window)
 	{
-		for (auto actor : _actors)
+		for (auto actor : mActors)
 		{
 			actor->Render(window);
 		}

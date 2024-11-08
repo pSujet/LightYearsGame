@@ -19,18 +19,18 @@ namespace ly
 		void RenderInternal();
 		virtual void Render();
 		virtual void Tick(float deltaTime);
-		sf::RenderWindow _window;
-		float _TargetFramerate;
-		sf::Clock _TickClock;
-		shared<World> currentWorld;
+		sf::RenderWindow mWindow;
+		float mTargetFramerate;
+		sf::Clock mTickClock;
+		shared<World> mCurrentWorld;
 	};
 
 	template<typename WorldType>
 	weak<WorldType> Application::LoadWorld() 
 	{
 		shared<WorldType> newWorld{ new WorldType{this} };
-		currentWorld = newWorld;
-		currentWorld->BeginPlayInternal();
+		mCurrentWorld = newWorld;
+		mCurrentWorld->BeginPlayInternal();
 		return newWorld;
 	}
 }

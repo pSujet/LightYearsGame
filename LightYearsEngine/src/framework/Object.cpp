@@ -4,7 +4,7 @@
 namespace ly
 {
     Object::Object()
-        : _isPendingDestroy{false}
+        : mIsPendingDestroy{false}
     {
 
     }
@@ -14,6 +14,6 @@ namespace ly
     }
     void Object::Destroy()
     {
-        _isPendingDestroy = true;
+        mIsPendingDestroy = true;
     }
 }

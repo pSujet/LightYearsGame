@@ -6,29 +6,29 @@
 namespace ly
 {
 	Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style)
-		: _window{ sf::VideoMode(windowWidth, windowHeight), title, style },
-		_TargetFramerate{ 60.0f },
-		_TickClock{},
-		currentWorld{nullptr}
+		: mWindow{ sf::VideoMode(windowWidth, windowHeight), title, style },
+		mTargetFramerate{ 60.0f },
+		mTickClock{},
+		mCurrentWorld{nullptr}
 	{
 		
 	}
 	void Application::Run() 
 	{	
-		_TickClock.restart();
+		mTickClock.restart();
 		float accumulatedTime = 0.0f;
-		float targetDeltaTime = 1.0f / _TargetFramerate;
-		while (_window.isOpen())
+		float targetDeltaTime = 1.0f / mTargetFramerate;
+		while (mWindow.isOpen())
 		{
 			sf::Event windowEvent;
-			while (_window.pollEvent(windowEvent))
+			while (mWindow.pollEvent(windowEvent))
 			{
 				if (windowEvent.type == sf::Event::EventType::Closed)
-					_window.close();
+					mWindow.close();
 			}
 
 
-			float frameDeltaTime = _TickClock.restart().asSeconds();
+			float frameDeltaTime = mTickClock.restart().asSeconds();
 			accumulatedTime += frameDeltaTime;
 			//update the frame at the targetDeltaTime
 			while (accumulatedTime >= targetDeltaTime)
@@ -45,26 +45,26 @@ namespace ly
 	{
 		Tick(deltaTime);
 
-		if (currentWorld) {			
-			currentWorld->TickInternal(deltaTime);
+		if (mCurrentWorld) {			
+			mCurrentWorld->TickInternal(deltaTime);
 		}			
 	}
 
 	// Better practice to make in this template pattern with virtual functions
 	void Application::RenderInternal()
 	{
-		_window.clear();
+		mWindow.clear();
 
 		Render();
 
-		_window.display();
+		mWindow.display();
 	}
 
 	void Application::Render()
 	{
-		if (currentWorld)
+		if (mCurrentWorld)
 		{
-			currentWorld->Render(_window);
+			mCurrentWorld->Render(mWindow);
 		}
 	}
 

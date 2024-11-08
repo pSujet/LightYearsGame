@@ -24,18 +24,18 @@ namespace ly
 	private:
 		void BeginPlay();
 		void Tick(float deltaTime);
-		Application* _owningApp;
-		bool _beganPlay;
+		Application* mOningApp;
+		bool mBeganPlay;
 
-		List<shared<Actor>> _actors;
-		List<shared<Actor>> _pendingActor; //Avoiding wrong adding in the actors list between the tick
+		List<shared<Actor>> mActors;
+		List<shared<Actor>> mPendingActor; //Avoiding wrong adding in the actors list between the tick
 	};
 
 	template<typename ActorType>
 	weak<ActorType> World::SpawnActor()
 	{
 		shared<ActorType> newActor{ new ActorType{this}};
-		_pendingActor.push_back(newActor);
+		mPendingActor.push_back(newActor);
 		return newActor; // Implicit conversion from shared to weak pointer
 	}
 }

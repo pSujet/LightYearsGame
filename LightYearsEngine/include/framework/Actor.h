@@ -19,10 +19,10 @@ namespace ly
         void Render(sf::RenderWindow& window);
     
     private:
-        World* _owningWorld;
-        bool _hasBeganPlay;
+        World* mOwningWorld;
+        bool mHasBeganPlay;
 
-        sf::Sprite _sprite;
-        sf::Texture _texture;
+        sf::Sprite mSprite;
+        sf::Texture mTexture;
     };
 }

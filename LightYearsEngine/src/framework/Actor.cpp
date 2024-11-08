@@ -4,10 +4,10 @@
 namespace ly
 {
     Actor::Actor(World* owningWorld, const std::string& texturePath)
-        :_owningWorld{owningWorld},
-        _hasBeganPlay{false},
-        _sprite{},
-        _texture{}
+        :mOwningWorld{owningWorld},
+        mHasBeganPlay{false},
+        mSprite{},
+        mTexture{}
     {
         SetTexture(texturePath);
     }
@@ -19,9 +19,9 @@ namespace ly
 
     void Actor::BeginPlayInternal()
     {
-         if(!_hasBeganPlay)
+         if(!mHasBeganPlay)
          {
-            _hasBeganPlay = true;
+            mHasBeganPlay = true;
             BeginPlay();
          }
     }
@@ -46,13 +46,13 @@ namespace ly
 
     void Actor::SetTexture(const std::string& texturePath)
     {
-        _texture.loadFromFile(texturePath);
-        _sprite.setTexture(_texture);
+        mTexture.loadFromFile(texturePath);
+        mSprite.setTexture(mTexture);
 
         // Texture rectangle top left to bottom right
-        int textureWidth = _texture.getSize().x;
-        int textureHeight = _texture.getSize().y;
-        _sprite.setTextureRect(sf::IntRect{sf::Vector2i{}, sf::Vector2i{textureWidth, textureHeight}});
+        int textureWidth = mTexture.getSize().x;
+        int textureHeight = mTexture.getSize().y;
+        mSprite.setTextureRect(sf::IntRect{sf::Vector2i{}, sf::Vector2i{textureWidth, textureHeight}});
     }
 
     void Actor::Render(sf::RenderWindow& window)
@@ -60,7 +60,7 @@ namespace ly
         if (IsPendingDestroy())
             return;
 
-        window.draw(_sprite);
+        window.draw(mSprite);
     }
     
 }
